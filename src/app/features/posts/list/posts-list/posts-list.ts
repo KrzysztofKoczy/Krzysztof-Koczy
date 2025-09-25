@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, computed, effect, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { forkJoin } from 'rxjs';
@@ -20,11 +20,29 @@ export class PostsList implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
 
   posts = signal<PostDto[]>([]);
+
   selectedPostId = signal<number | null>(null);
   selectedPostDetails = signal<{ post: PostDto; user: UserDto; comments: CommentDto[] } | null>(null);
   isLoadingDetails = signal(false);
   isModalOpen = computed(() => this.selectedPostId() !== null);
-  
+  filteredPosts = computed(() => {
+    const showOnlyFavorites = this.postsStore.showOnlyFavorites();
+    const favoritesIds = this.postsStore.favoritePosts().map((post) => post.id);
+
+    if (!showOnlyFavorites) {
+      return this.posts();
+    }
+
+    return this.posts().filter((post) => favoritesIds.includes(post.id));
+  });
+
+  constructor() {
+    effect(() => {
+      const posts = this.postsStore.favoritePosts();
+      console.log('favorite', posts);
+    });
+  }
+
   ngOnInit(): void {
     this.postsStore.posts$
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -72,7 +90,5 @@ export class PostsList implements OnInit {
 
   toggleFavorite(postId: number): void {
     this.postsStore.toggleFavorite(postId);
-    console.log('favoritePosts', this.postsStore.favoritePosts());
-
   }
 }

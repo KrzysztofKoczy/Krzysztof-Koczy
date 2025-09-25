@@ -10,6 +10,7 @@ export class PostsStore {
 
   readonly posts$: Observable<PostDto[]> = this.postsSubject.asObservable();
   favoritePosts = signal<PostDto[]>([]);
+  showOnlyFavorites = signal(false);
 
   loadPosts(): void {
     this.postsRest
@@ -45,6 +46,10 @@ export class PostsStore {
     const post = this.postsSubject.value.find((item) => item.id === postId);
     
     this.favoritePosts.set([...favorites!, post!]);
+  }
+
+  toggleFavoritesFilter(): void {
+    this.showOnlyFavorites.update((value) => !value);
   }
 }
 
