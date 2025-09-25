@@ -44,18 +44,3 @@ ng serve
 npm run start
 ```
 Po uruchomieniu aplikacja będzie dostępna pod adresem `http://localhost:4200/`.
-
----
-
-## Architektura projektu
-
-```
-src/
-  app/
-    features/
-      posts/
-        list/          # lista postów, filtry, modal szczegółów
-        shell/         # główny kontener feature’u
-    services/          # PostsRest (API), PostsStore (cache + signals)
-    shared/            # komponenty wspólne (modal, spinner)
-```
