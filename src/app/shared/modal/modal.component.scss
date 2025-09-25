@@ -9,6 +9,8 @@
 }
 
 .modal-content {
+  height: calc(100vh - 100px);
+  overflow-y: scroll;
   background-color: #fff;
   border-radius: 8px;
   padding: 24px;

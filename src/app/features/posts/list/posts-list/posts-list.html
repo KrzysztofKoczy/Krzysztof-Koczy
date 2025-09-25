@@ -1,16 +1,56 @@
-
-  Post list
-
 <div class="posts-container">
 @if (posts().length > 0) {
 
   @for (post of posts(); track post.id) {
-    <div class="post-box">
+    <div class="post-box" (click)="openPost(post.id)">
       <h2>Title:{{ post.title }}</h2>
       <p>Body: {{ post.body }}</p>
     </div>
   }
 } @else {
   <p>No posts found</p>
+}
+
+@if (isModalOpen()) {
+  <app-modal (close)="closeModal()">
+    @if (isLoadingDetails()) {
+      <p>Wczytywanie danych...</p>
+    } @else if (selectedPostDetails()) {
+      <h2><strong>Title:</strong> {{ selectedPostDetails()?.post?.title }}</h2>
+      <br>
+      <p><strong>Body:</strong> {{ selectedPostDetails()?.post?.body }}</p>
+      <br>
+      <h3><strong>Author</strong></h3>
+      <p><strong>Name:</strong> {{ selectedPostDetails()?.user?.name }}</p>
+      <p><strong>Username:</strong> {{ selectedPostDetails()?.user?.username }}</p>
+      <p><strong>Email:</strong> {{ selectedPostDetails()?.user?.email }}</p>
+
+      <p><strong>Address:</strong></p>
+      <p><strong>Street:</strong> {{ selectedPostDetails()?.user?.address?.street }}</p>
+      <p><strong>Suite:</strong> {{ selectedPostDetails()?.user?.address?.suite }}</p>
+      <p><strong>City:</strong> {{ selectedPostDetails()?.user?.address?.city }}</p>
+      <p><strong>Zipcode:</strong> {{ selectedPostDetails()?.user?.address?.zipcode }}</p>
+      <p><strong>Geo:</strong> {{ selectedPostDetails()?.user?.address?.geo?.lat }}, {{ selectedPostDetails()?.user?.address?.geo?.lng }}</p>
+      <br>
+
+      <p><strong>Phone:</strong> {{ selectedPostDetails()?.user?.phone }}</p>
+      <p><strong>Website:</strong> {{ selectedPostDetails()?.user?.website }}</p>
+
+      <br>
+      <h3><strong>Company</strong></h3>
+      <p><strong>Name:</strong> {{ selectedPostDetails()?.user?.company?.name }}</p>
+      <p><strong>CatchPhrase:</strong> {{ selectedPostDetails()?.user?.company?.catchPhrase }}</p>
+      <p><strong>Bs:</strong> {{ selectedPostDetails()?.user?.company?.bs }}</p>
+
+      <br>
+      <br>
+      <h3><strong>Comments</strong></h3>
+      @for (comment of selectedPostDetails()?.comments; track comment.id) {
+        <h4><strong>Name:</strong> {{ comment.name }}</h4>
+        <p><strong>Email:</strong> {{ comment.email }}</p>
+        <p><strong>Body:</strong>{{ comment.body }}</p>
+      } 
+    }
+  </app-modal>
 }
 </div>
