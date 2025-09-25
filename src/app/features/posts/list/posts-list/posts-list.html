@@ -2,11 +2,11 @@
 @if (posts().length > 0) {
 
   @for (post of filteredPosts(); track post.id) {
-    <div class="post-box">
-      <button (click)="toggleFavorite(post.id)">Favourite</button>
-      <div (click)="openPost(post.id)">
-        <h2>Title:{{ post.title }}</h2>
-        <p>Body: {{ post.body }}</p>
+    <div class="post-box" #postBox>
+      <button (click)="toggleFavorite(post.id, postBox)">Favourite</button>
+      <div class="post-box-content" (click)="openPost(post.id)">
+        <h2><strong>Title: </strong> {{ post.title }}</h2>
+        <p><strong>Body: </strong> {{ post.body }}</p>
       </div>
     </div>
   }

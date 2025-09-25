@@ -2,6 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    justify-content: center;
 }
 
 .post-box {
@@ -12,13 +13,24 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 200px;
-    // height: 150px;
+    max-height: 170px;
     overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
 
+.post-box.favorite {
+    border-color: #d4af37;
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
 
-    p {
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
+    button {
+        color: #d4af37;
     }
 }
+
+.post-box-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+

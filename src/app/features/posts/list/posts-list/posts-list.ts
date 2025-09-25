@@ -16,7 +16,7 @@ import { PostsStore } from '../../../../services/posts-store';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PostsList implements OnInit {
-  private readonly postsStore = inject(PostsStore);
+  postsStore = inject(PostsStore);
   private readonly destroyRef = inject(DestroyRef);
 
   posts = signal<PostDto[]>([]);
@@ -101,7 +101,8 @@ export class PostsList implements OnInit {
     this.isLoadingDetails.set(false);
   }
 
-  toggleFavorite(postId: number): void {
+  toggleFavorite(postId: number, element: HTMLElement): void {
+    element.classList.toggle('favorite');
     this.postsStore.toggleFavorite(postId);
   }
 }
