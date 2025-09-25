@@ -29,8 +29,8 @@ Aplikacja w Angularze 20 prezentująca listę postów z API [jsonplaceholder.typ
 ### Instalacja
 ```bash
 # 1. Sklonuj repozytorium
-git clone <URL_RPO>
-cd <KATALOG_Z_REPO>
+git clone https://github.com/KrzysztofKoczy/Krzysztof-Koczy.git
+cd Krzysztof-Koczy
 
 # 2. Zainstaluj zależności
 npm install
