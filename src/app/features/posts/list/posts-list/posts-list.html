@@ -1,4 +1,16 @@
 
   Post list
 
+<div class="posts-container">
+@if (posts().length > 0) {
 
+  @for (post of posts(); track post.id) {
+    <div class="post-box">
+      <h2>Title:{{ post.title }}</h2>
+      <p>Body: {{ post.body }}</p>
+    </div>
+  }
+} @else {
+  <p>No posts found</p>
+}
+</div>
