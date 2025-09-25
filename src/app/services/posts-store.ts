@@ -11,6 +11,8 @@ export class PostsStore {
   readonly posts$: Observable<PostDto[]> = this.postsSubject.asObservable();
   favoritePosts = signal<PostDto[]>([]);
   showOnlyFavorites = signal(false);
+  bodyQuery = signal('');
+  userIdFilter = signal<number | null>(null);
 
   loadPosts(): void {
     this.postsRest
@@ -50,6 +52,14 @@ export class PostsStore {
 
   toggleFavoritesFilter(): void {
     this.showOnlyFavorites.update((value) => !value);
+  }
+
+  setBodyQuery(value: string): void {
+    this.bodyQuery.set(value);
+  }
+
+  setUserIdFilter(userId: number | null): void {
+    this.userIdFilter.set(userId);
   }
 }
 

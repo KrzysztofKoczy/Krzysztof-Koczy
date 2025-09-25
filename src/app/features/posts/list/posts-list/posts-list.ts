@@ -26,14 +26,27 @@ export class PostsList implements OnInit {
   isLoadingDetails = signal(false);
   isModalOpen = computed(() => this.selectedPostId() !== null);
   filteredPosts = computed(() => {
+    const posts = this.posts();
+    const favorites = this.postsStore.favoritePosts();
     const showOnlyFavorites = this.postsStore.showOnlyFavorites();
-    const favoritesIds = this.postsStore.favoritePosts().map((post) => post.id);
+    const bodyQuery = this.postsStore.bodyQuery();
+    const userIdFilter = this.postsStore.userIdFilter();
 
-    if (!showOnlyFavorites) {
-      return this.posts();
-    }
+    return posts.filter((post) => {
+      if (showOnlyFavorites && !favorites.some((item) => item.id === post.id)) {
+        return false;
+      }
 
-    return this.posts().filter((post) => favoritesIds.includes(post.id));
+      if (bodyQuery && !post.body.toLowerCase().includes(bodyQuery.toLowerCase())) {
+        return false;
+      }
+
+      if (userIdFilter !== null && post.userId !== userIdFilter) {
+        return false;
+      }
+
+      return true;
+    });
   });
 
   constructor() {

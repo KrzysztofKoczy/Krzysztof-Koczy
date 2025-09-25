@@ -1,7 +1,7 @@
 <div class="posts-container">
 @if (posts().length > 0) {
 
-  @for (post of posts(); track post.id) {
+  @for (post of filteredPosts(); track post.id) {
     <div class="post-box">
       <button (click)="toggleFavorite(post.id)">Favourite</button>
       <div (click)="openPost(post.id)">
