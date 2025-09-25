@@ -3,14 +3,13 @@ import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { forkJoin } from 'rxjs';
 
-import { CommentDto, PostDto, UserDto } from '../../../../services/posts-rest';
+import { CommentDto, PostDto, UserDto } from '../../../../model/interfaces';
 import { Modal } from '../../../../shared/modal/modal';
 import { PostsStore } from '../../../../services/posts-store';
 import { Spinner } from '../../../../shared/spinner/spinner';
 
 @Component({
   selector: 'app-posts-list',
-  standalone: true,
   imports: [CommonModule, Modal, Spinner],
   templateUrl: './posts-list.html',
   styleUrls: ['./posts-list.scss'],
@@ -18,14 +17,15 @@ import { Spinner } from '../../../../shared/spinner/spinner';
 })
 export class PostsList implements OnInit {
   postsStore = inject(PostsStore);
+
   private readonly destroyRef = inject(DestroyRef);
 
   posts = signal<PostDto[]>([]);
-
   selectedPostId = signal<number | null>(null);
   selectedPostDetails = signal<{ post: PostDto; user: UserDto; comments: CommentDto[] } | null>(null);
   isLoadingDetails = signal(false);
   isModalOpen = computed(() => this.selectedPostId() !== null);
+
   filteredPosts = computed(() => {
     const posts = this.posts();
     const favorites = this.postsStore.favoritePosts();

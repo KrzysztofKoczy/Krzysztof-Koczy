@@ -1,15 +1,15 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-
-import { CommentDto, PostDto, PostsRest, UserDto } from './posts-rest';
+import { CommentDto, PostDto, UserDto } from '../model/interfaces';
+import { PostsRest } from './posts-rest';
 
 @Injectable({ providedIn: 'root' })
 export class PostsStore {
   private readonly postsRest = inject(PostsRest);
   private readonly postsSubject = new BehaviorSubject<PostDto[]>([]);
 
-
   posts$: Observable<PostDto[]> = this.postsSubject.asObservable();
+
   favoritePosts = signal<PostDto[]>([]);
   showOnlyFavorites = signal(false);
   bodyQuery = signal('');
@@ -29,11 +29,6 @@ export class PostsStore {
         },
         complete: () => this.isLoadingSignal.set(false)
       });
-  }
-
-  setPosts(posts: PostDto[]): void {
-    this.postsSubject.next(posts);
-    this.isLoadedSignal.set(true);
   }
 
   getUser(userId: number): Observable<UserDto> {

@@ -11,4 +11,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['./spinner.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Spinner {}
+export class Spinner { }
