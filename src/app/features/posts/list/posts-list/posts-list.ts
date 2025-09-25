@@ -52,8 +52,7 @@ export class PostsList implements OnInit {
 
   constructor() {
     effect(() => {
-      const posts = this.postsStore.favoritePosts();
-      console.log('favorite', posts);
+      this.postsStore.favoritePosts();
     });
   }
 
