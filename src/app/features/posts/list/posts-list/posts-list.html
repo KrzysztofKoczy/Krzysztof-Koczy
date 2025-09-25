@@ -1,5 +1,10 @@
 <div class="posts-container">
-@if (posts().length > 0) {
+@if (postsStore.isLoadingSignal()) {
+  <div class="loading-container">
+    <app-spinner />
+    <p>Loading...</p>
+  </div>
+} @else if (posts().length > 0) {
 
   @for (post of filteredPosts(); track post.id) {
     <div class="post-box" #postBox>
@@ -17,7 +22,8 @@
 @if (isModalOpen()) {
   <app-modal (close)="closeModal()">
     @if (isLoadingDetails()) {
-      <p>Wczytywanie danych...</p>
+      <app-spinner />
+      <p>Loading...</p>
     } @else if (selectedPostDetails()) {
       <h2><strong>Title:</strong> {{ selectedPostDetails()?.post?.title }}</h2>
       <br>

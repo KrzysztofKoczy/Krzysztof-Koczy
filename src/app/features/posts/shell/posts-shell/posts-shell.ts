@@ -14,9 +14,6 @@ import { PostsList } from '../../list/posts-list/posts-list';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PostsShell implements OnInit {
-
-  ngOnInit(): void {
-  }
+export class PostsShell {
 }
 

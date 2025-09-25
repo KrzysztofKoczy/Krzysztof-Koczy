@@ -6,11 +6,12 @@ import { forkJoin } from 'rxjs';
 import { CommentDto, PostDto, UserDto } from '../../../../services/posts-rest';
 import { Modal } from '../../../../shared/modal/modal';
 import { PostsStore } from '../../../../services/posts-store';
+import { Spinner } from '../../../../shared/spinner/spinner';
 
 @Component({
   selector: 'app-posts-list',
   standalone: true,
-  imports: [CommonModule, Modal],
+  imports: [CommonModule, Modal, Spinner],
   templateUrl: './posts-list.html',
   styleUrls: ['./posts-list.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

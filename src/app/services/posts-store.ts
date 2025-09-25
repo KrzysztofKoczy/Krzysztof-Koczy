@@ -8,23 +8,32 @@ export class PostsStore {
   private readonly postsRest = inject(PostsRest);
   private readonly postsSubject = new BehaviorSubject<PostDto[]>([]);
 
-  readonly posts$: Observable<PostDto[]> = this.postsSubject.asObservable();
+
+  posts$: Observable<PostDto[]> = this.postsSubject.asObservable();
   favoritePosts = signal<PostDto[]>([]);
   showOnlyFavorites = signal(false);
   bodyQuery = signal('');
   userIdFilter = signal<number | null>(null);
+  isLoadingSignal = signal(false);
+  isLoadedSignal = signal(false);
 
   loadPosts(): void {
+    this.isLoadingSignal.set(true);
     this.postsRest
       .getPosts()
       .pipe(tap((posts) => this.postsSubject.next(posts)))
       .subscribe({
-        error: (error) => console.error('error', error)
+        next: () => this.isLoadedSignal.set(true),
+        error: (error) => {
+          this.isLoadingSignal.set(false);
+        },
+        complete: () => this.isLoadingSignal.set(false)
       });
   }
 
   setPosts(posts: PostDto[]): void {
     this.postsSubject.next(posts);
+    this.isLoadedSignal.set(true);
   }
 
   getUser(userId: number): Observable<UserDto> {
