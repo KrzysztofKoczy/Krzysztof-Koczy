@@ -71,7 +71,8 @@ export class PostsList implements OnInit {
   }
 
   toggleFavorite(postId: number): void {
-    console.log('toggleFavorite', postId);
+    this.postsStore.toggleFavorite(postId);
+    console.log('favoritePosts', this.postsStore.favoritePosts());
 
   }
 }
