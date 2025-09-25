@@ -11,10 +11,10 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angul
       </div>
     </div>
   `,
-  styleUrls: ['./modal.component.scss'],
+  styleUrls: ['./modal.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ModalComponent {
+export class Modal {
   @Output() close = new EventEmitter<void>();
 
   handleBackdropClick(): void {

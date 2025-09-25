@@ -2,9 +2,12 @@
 @if (posts().length > 0) {
 
   @for (post of posts(); track post.id) {
-    <div class="post-box" (click)="openPost(post.id)">
-      <h2>Title:{{ post.title }}</h2>
-      <p>Body: {{ post.body }}</p>
+    <div class="post-box">
+      <button (click)="toggleFavorite(post.id)">Favourite</button>
+      <div (click)="openPost(post.id)">
+        <h2>Title:{{ post.title }}</h2>
+        <p>Body: {{ post.body }}</p>
+      </div>
     </div>
   }
 } @else {
